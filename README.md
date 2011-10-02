@@ -1,6 +1,6 @@
 # AIR 3 Windows-x86 Native Extension for Taskbar (Progress) API
 
-AIR 3 Native Extension was written  in C++ to provide access to Windows 7 Taskbar API (Only Progress at moment).
+This AIR 3 Native Extension was written  in C++ to provide access to Windows 7 Taskbar API (Only Progress at moment).
 
 ### Requirements
 
