@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Builder" basedir="." default="build">
+
+     <!-- Properties -->
+	<property file="build.properties"/>
+
+   <!-- Flex Ant Tasks -->
+    <taskdef resource="flexTasks.tasks"
+    	classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+
+    <!-- Main Task -->
+    <target name="build" depends="compile, extract-library, get-resources, create-extension"/>
+
+    <!-- Compile SWC -->
+    <target name="compile">
+        <compc output="${dist.dir}/${swc.name}.swc">
+
+            <namespace uri="library://by.frank/flex" manifest="manifest.xml"/>
+        	<include-namespaces>library://by.frank/flex</include-namespaces>
+
+            <load-config filename="${FLEX_HOME}/frameworks/air-config.xml"/>
+            <source-path path-element="${FLEX_HOME}/frameworks"/>
+            <source-path path-element="${flex.source}"/>
+        </compc>
+    </target>
+
+    <!-- Extract library.swf -->
+    <target name="extract-library">
+        <unzip src="${dist.dir}/${swc.name}.swc" dest="${dist.dir}">
+            <patternset>
+                <include name="library.swf"/>
+            </patternset>
+        </unzip>
+    </target>
+
+    <!-- Retrieve necessary resources like p12 certificate and extension.xml -->
+    <target name="get-resources">
+        <copy todir="${dist.dir}" overwrite="true">
+            <fileset dir="${flex.resource}"/>
+        </copy>
+        <copy todir="${dist.dir}" overwrite="true">
+            <fileset dir="native-libraries"/>
+        </copy>
+    </target>
+
+    <!-- Create Extension -->
+    <target name="create-extension">
+		<java jar="${ADT}" dir="${dist.dir}" fork="true" failonerror="true">
+			<arg value="-package"/>
+            <arg value="-storetype"/>
+            <arg value="pkcs12"/>
+			<arg value="-keystore"/>
+			<arg value="${keystore}"/>
+			<arg value="-storepass"/>
+			<arg value="${password}"/>
+			<arg value="-target"/>
+			<arg value="ane"/>
+			<arg value="${extension.name}.ane"/>
+			<arg value="extension.xml"/>
+			<arg value="-swc"/>
+			<arg value="${swc.name}.swc"/>
+			<arg value="-platform"/>
+			<arg value="${platfor.name}"/>
+            <arg value="library.swf"/>
+            <arg value="${native.library}"/>
+		</java>
+    </target>
+</project>

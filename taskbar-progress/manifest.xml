@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<componentPackage>
+	<component id="TaskBarProgressManager" class="by.frank.taskbar.progress.managers.TaskBarProgressManager"/>
+    <component id="ProgressStateType" class="by.frank.taskbar.progress.managers.ProgressStateType"/>
+
+</componentPackage>
