@@ -1,17 +1,32 @@
 <?xml version="1.0"?>
-<s:WindowedApplication title="Taskbar Progress Example" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" width="500" height="80">
+<s:WindowedApplication title="Taskbar Progress Example"
+    xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+    width="500" height="80">
+
+    <!-- Taskbar Progress Native Extension Example
+        @author Daniel R C Frank
+        @since 01/10/11
+        @version 1.0.0 -->
     <fx:Script>
         <![CDATA[
+            import by.frank.taskbar.progress.managers.ProgressStateType;
             import by.frank.taskbar.progress.managers.TaskBarProgressManager;
-
 
             private var manager:TaskBarProgressManager = new TaskBarProgressManager();
 
+            /**
+             * Sets a Progress State
+             * @param state
+             */
             private function setState(state:int):void
             {
                 manager.setProgressState(state);
             }
 
+            /**
+             * Handle hsProgress changes
+             * @param event
+             */
             private function hsProgress_changeHandler(event:Event):void
             {
                 manager.setProgress(hsProgress.value, 99);
@@ -19,17 +34,43 @@
         ]]>
     </fx:Script>
 
+    <!-- Interface -->
     <s:layout>
         <s:VerticalLayout paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10"/>
     </s:layout>
 
-    <s:HSlider id="hsProgress" minimum="0" maximum="99" stepSize="1" width="100%" change="hsProgress_changeHandler(event)"/>
+    <!-- Progress Value -->
+    <s:HSlider id="hsProgress"
+        minimum="0" maximum="99" stepSize="1"
+        width="100%"
+        change="hsProgress_changeHandler(event)"/>
 
+    <!-- Progress States -->
     <s:HGroup width="100%" horizontalAlign="center">
-        <s:Button id="btnIndeterminate" label="Indeterminate" click="setState(1)"/>
-        <s:Button id="btnINormal" label="Normal" click="setState(2)"/>
-        <s:Button id="btnError" label="Error" click="setState(3)"/>
-        <s:Button id="btnPaused" label="Paused" click="setState(4)"/>
-        <s:Button id="btnNoProgress" label="No Progress" click="setState(0)"/>
+
+        <!-- Indeterminate State -->
+        <s:Button id="btnIndeterminate"
+            label="Indeterminate"
+            click="setState(ProgressStateType.INDETERMINATE)"/>
+
+        <!-- Normal State -->
+        <s:Button id="btnINormal"
+            label="Normal"
+            click="setState(ProgressStateType.NORMAL)"/>
+
+        <!-- Error State -->
+        <s:Button id="btnError"
+            label="Error"
+            click="setState(ProgressStateType.ERROR)"/>
+
+        <!-- Paused State -->
+        <s:Button id="btnPaused"
+            label="Paused"
+            click="setState(ProgressStateType.PAUSED)"/>
+
+        <!-- No Progress State -->
+        <s:Button id="btnNoProgress"
+            label="No Progress"
+            click="setState(ProgressStateType.NO_PROGRESS)"/>
     </s:HGroup>
 </s:WindowedApplication>

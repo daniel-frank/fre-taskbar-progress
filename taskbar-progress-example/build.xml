@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Builder" basedir="." default="build">
+
+     <!-- Properties -->
+	<property file="build.properties"/>
+
+   <!-- Flex Ant Tasks -->
+    <taskdef resource="flexTasks.tasks"
+    	classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+
+    <!-- Main Task -->
+    <target name="build" depends="compile, get-resources, create-installer"/>
+
+    <!-- Compile SWF -->
+    <target name="compile">
+        <mxmlc file="${flex.source}/Main.mxml"
+        	output="${dist.dir}/Main.swf"
+    		optimize="true"
+        	actionscript-file-encoding="UTF-8">
+
+        	<load-config filename="${FLEX_HOME}/frameworks/air-config.xml"/>
+
+			<compiler.library-path dir="." append="true">
+				<include name="${library.dir}"/>
+			</compiler.library-path>
+        </mxmlc>
+    </target>
+
+    <!-- Retrieve necessary resources like p12 certificate and extension.xml -->
+    <target name="get-resources">
+        <copy todir="${dist.dir}" overwrite="true">
+            <fileset dir="${flex.resource}"/>
+        </copy>
+        <copy todir="${dist.dir}/native-extensions" overwrite="true">
+            <fileset dir="extensions"/>
+        </copy>
+    </target>
+
+    <!-- Create Installer -->
+    <target name="create-installer">
+		<java jar="${ADT}" dir="${dist.dir}" fork="true" failonerror="true">
+			<arg value="-package"/>
+            <arg value="-XnoAneValidate"/>
+            <arg value="-storetype"/>
+            <arg value="pkcs12"/>
+			<arg value="-keystore"/>
+			<arg value="${keystore}"/>
+			<arg value="-storepass"/>
+			<arg value="${password}"/>
+			<arg value="-target"/>
+			<arg value="native"/>
+			<arg value="${installer.name}"/>
+			<arg value="${air.descriptor}"/>
+			<arg value="Main.swf"/>
+			<arg value="-extdir"/>
+			<arg value="native-extensions"/>
+		</java>
+    </target>
+</project>
