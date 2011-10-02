@@ -4,8 +4,8 @@ AIR 3 Native Extension was written  in C++ to provide access to Windows 7 Taskba
 
 ### Requirements
 
-+ Microsoft C++ Redistributable Bundle 2010;
-+ Adobe AIR 3.0 RC;
++ [Microsoft C++ Redistributable Bundle 2010 x86](http://www.microsoft.com/download/en/details.aspx?id=5555);
++ [Adobe AIR 3.0 RC 1](http://labs.adobe.com/downloads/air3.html);
 + JRE and Apache Ant(Only for compile/package purposes).
 
 ### Example
