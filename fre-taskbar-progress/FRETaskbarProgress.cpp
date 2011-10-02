@@ -1,6 +1,5 @@
 #include "FRETaskBarProgress.h"
 
-
 FREObject setProgress(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 {
 	ITaskbarList3 *pTaskbarList = NULL;
@@ -13,16 +12,6 @@ FREObject setProgress(FREContext ctx, void* funcData, uint32_t argc, FREObject a
 	FREGetObjectAsInt32(argv[1], &max);
 		
 	pTaskbarList->SetProgressValue(hWnd, value, max);
-
-	return NULL;
-}
-
-FREObject setSimpleProgressState(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
-{
-	ITaskbarList3 *pTaskbarList = NULL;
-	CoCreateInstance(CLSID_TaskbarList, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pTaskbarList));
-
-	pTaskbarList->SetProgressState(hWnd, TBPFLAG::TBPF_INDETERMINATE);
 
 	return NULL;
 }
@@ -81,7 +70,7 @@ void contextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, u
 	DWORD processID = GetCurrentProcessId();
 	EnumWindows(EnumProc, processID);
 
-	*numFunctions = 3;
+	*numFunctions = 2;
 
 	FRENamedFunction* func = (FRENamedFunction*) malloc(sizeof(FRENamedFunction) * (*numFunctions));
 
@@ -92,10 +81,6 @@ void contextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, u
 	func[1].name = (const uint8_t*) "setProgressState";
 	func[1].functionData = NULL;
 	func[1].function = &setProgressState;
-
-	func[2].name = (const uint8_t*) "setSimpleProgressState";
-	func[2].functionData = NULL;
-	func[2].function = &setSimpleProgressState;
 
 	*functions = func;
 }
