@@ -12,6 +12,8 @@ AIR 3 Native Extension was written  in C++ to provide access to Windows 7 Taskba
 
 A functional example can be downloaded at  `taskbar-progress-example/target/taskbar-progress-example.exe`.
 
+![Example](http://dl.dropbox.com/u/473693/fre-taskbar-progress/img/example.png)
+
 ### For Devs
 
 + The C++ project, `fre-taskbar-progress`, can be imported in Microsoft Visual C++ 2010 Express Edition;
